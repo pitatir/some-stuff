@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App Main Screen</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #e0e0e0, #ffffff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+        #viewfinder {
+            width: 90%;
+            height: 50vh;
+            background-color: black;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        .button {
+            background: #6200ee;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: #3700b3;
+            transform: scale(1.05);
+        }
+        .slider {
+            margin: 10px;
+            width: 80%;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #status-bar {
+            width: 100%;
+            background: #333;
+            color: white;
+            padding: 5px;
+            position: absolute;
+            top: 0;
+            text-align: right;
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="status-bar">12:26 | Батарея 75%</div>
+    <div id="viewfinder">
+        <div id="viewfinder-content">Видоискатель</div>
+    </div>
+    <div class="controls">
+        <button class="button" onclick="selectCamera('1x')">1x</button>
+        <button class="button" onclick="selectCamera('2x')">2x</button>
+        <button class="button" onclick="selectCamera('Ultra')">Ультра</button>
+    </div>
+    <div class="controls">
+        <button class="button">Настройки</button>
+        <input type="range" class="slider" id="isoSlider" value="50" min="50" max="6400" step="50" onchange="updateISO(this.value)">
+        <label>ISO: <span id="isoValue">50</span></label>
+    </div>
+    <div class="controls">
+        <input type="range" class="slider" id="shutterSlider" value="100" min="1" max="1000" step="1" onchange="updateShutterSpeed(this.value)">
+        <label>Скорость затвора: <span id="shutterValue">100</span> мс</label>
+    </div>
+    <div class="controls">
+        <input type="range" class="slider" id="wbSlider" value="5600" min="2000" max="8000" step="100" onchange="updateWhiteBalance(this.value)">
+        <label>Баланс белого: <span id="wbValue">5600</span> K</label>
+    </div>
+    <div class="controls">
+        <button class="button">JPEG</button>
+        <button class="button">RAW</button>
+        <button class="button">AUTO</button>
+        <button class="button">PRESET</button>
+    </div>
+    <div class="controls">
+        <button class="button">Гистограмма</button>
+        <button class="button">Сетка</button>
+        <button class="button">Кнопка затвора</button>
+        <button class="button">Галерея</button>
+        <button class="button">Предустановка</button>
+    </div>
+    <script>
+        function selectCamera(zoom) {
+            alert('Выбрано увеличение: ' + zoom);
+        }
+        function updateISO(value) {
+            document.getElementById('isoValue').innerText = value;
+        }
+        function updateShutterSpeed(value) {
+            document.getElementById('shutterValue').innerText = value;
+        }
+        function updateWhiteBalance(value) {
+            document.getElementById('wbValue').innerText = value;
+        }
+    </script>
+</body>
+</html>
