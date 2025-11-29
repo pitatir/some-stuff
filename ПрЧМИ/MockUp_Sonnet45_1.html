@@ -1,0 +1,1666 @@
+Я разработаю полный набор макетов экранных форм для приложения MVx Camera на основе документации.  Создам HTML-файл со всеми макетами в едином стиле, следуя эвристикам Нильсена. 
+
+````html name=mvx_camera_mockups.html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVx Camera - Макеты экранных форм</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0. 3);
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        . mockup-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .mockup-card:hover {
+            transform: translateY(-5px);
+        }
+
+        . mockup-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mockup-header h2 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        . mockup-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .phone-frame {
+            background: #1a1a1a;
+            margin: 20px;
+            border-radius: 30px;
+            padding: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .phone-screen {
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 9/19. 5;
+        }
+
+        /* Экран 1: Главный экран съемки */
+        .camera-view {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            height: 30px;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 11px;
+            color: white;
+        }
+
+        .viewfinder {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 14px;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            opacity: 0.3;
+        }
+
+        .grid-overlay div {
+            border: 1px solid white;
+        }
+
+        .top-controls {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 10;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .info-overlay {
+            position: absolute;
+            top: 90px;
+            left: 15px;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+            font-size: 11px;
+            backdrop-filter: blur(10px);
+        }
+
+        . info-row {
+            display: flex;
+            gap: 15px;
+            margin: 3px 0;
+        }
+
+        .histogram {
+            position: absolute;
+            top: 90px;
+            right: 15px;
+            width: 100px;
+            height: 60px;
+            background: rgba(0,0,0,0. 6);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            padding: 5px;
+        }
+
+        .histogram-bars {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+
+        .histogram-bar {
+            width: 3px;
+            background: linear-gradient(to top, #4299e1, #667eea);
+            border-radius: 2px;
+        }
+
+        . side-controls {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        . control-panel {
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .param-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: white;
+            font-size: 12px;
+        }
+
+        . param-label {
+            font-weight: 500;
+            min-width: 60px;
+        }
+
+        . slider-container {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        . slider {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .slider-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4299e1, #667eea);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .param-value {
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: #4299e1;
+        }
+
+        .bottom-controls {
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .shutter-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid rgba(255,255,255,0.5);
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .shutter-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .secondary-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .thumbnail {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 2px solid white;
+        }
+
+        /* Экран 2: Управление пресетами */
+        .presets-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-bar {
+            height: 56px;
+            background: rgba(0,0,0,0. 3);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .app-bar-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .search-bar {
+            background: rgba(255,255,255,0.15);
+            border-radius: 25px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .section-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 12px;
+            opacity: 0.9;
+        }
+
+        .preset-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .preset-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        . preset-name {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .preset-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .preset-action-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0. 15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .preset-params {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            right: 35px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Экран 3: Создание/редактирование пресета */
+        .preset-editor {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .input-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .input-field input {
+            width: 100%;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .parameter-group {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .group-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        . parameter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0. 1);
+        }
+
+        .parameter-item:last-child {
+            border-bottom: none;
+        }
+
+        .parameter-name {
+            color: white;
+            font-size: 14px;
+        }
+
+        .parameter-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stepper-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0. 15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .parameter-display {
+            min-width: 70px;
+            text-align: center;
+            color: #4299e1;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Экран 4: Настройки */
+        .settings-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .settings-group {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .settings-item {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-label {
+            color: white;
+            font-size: 14px;
+        }
+
+        .settings-desc {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        . toggle-switch {
+            width: 50px;
+            height: 28px;
+            background: rgba(255,255,255,0. 3);
+            border-radius: 14px;
+            position: relative;
+        }
+
+        .toggle-switch. active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .toggle-thumb {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch. active .toggle-thumb {
+            transform: translateX(22px);
+        }
+
+        . chevron {
+            color: rgba(255,255,255,0.5);
+            font-size: 18px;
+        }
+
+        /* Экран 5: Применение пресета */
+        .preset-apply-dialog {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .dialog-handle {
+            width: 40px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .preset-preview {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        . preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        . preview-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+        }
+
+        . preview-value {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Экран 6: Помощь */
+        .help-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .help-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .help-question {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .help-answer {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .category-chip {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            color: white;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Экран 7: Форматы сохранения */
+        .format-option {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+        }
+
+        .format-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .format-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        . format-name {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .radio-btn {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .radio-btn. selected {
+            border-color: #667eea;
+        }
+
+        .radio-btn. selected::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: #667eea;
+            border-radius: 50%;
+        }
+
+        .format-desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .format-specs {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Экран 8: Выбор камеры */
+        .camera-selector {
+            background: rgba(0,0,0,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            position: absolute;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .camera-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0. 1);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+        }
+
+        .camera-option. active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .camera-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .camera-info {
+            flex: 1;
+        }
+
+        .camera-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        . camera-specs {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+        }
+
+        /* Адаптивные стили для мелких элементов */
+        @media (max-width: 768px) {
+            .mockup-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Анимации */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        . recording-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 1. 5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 MVx Camera — Макеты экранных форм</h1>
+        
+        <div class="mockup-grid">
+            <!-- Макет 1: Главный экран съемки -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>1. Главный экран съемки</h2>
+                    <p>Основной интерфейс с видоискателем и элементами управления</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="camera-view">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="viewfinder">
+                                <div class="grid-overlay">
+                                    <div></div><div></div><div></div>
+                                    <div></div><div></div><div></div>
+                                    <div></div><div></div><div></div>
+                                </div>
+                                <span>ПРЕДПРОСМОТР КАМЕРЫ</span>
+                                
+                                <div class="top-controls">
+                                    <div class="icon-btn">⚙️</div>
+                                    <div class="icon-btn">⚡</div>
+                                    <div class="icon-btn">🔄</div>
+                                </div>
+                                
+                                <div class="info-overlay">
+                                    <div class="info-row">
+                                        <span>ISO: 400</span>
+                                        <span>1/125s</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span>WB: 5600K</span>
+                                        <span>f/1.8</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="histogram">
+                                    <div class="histogram-bars">
+                                        <div class="histogram-bar" style="height: 40%"></div>
+                                        <div class="histogram-bar" style="height: 60%"></div>
+                                        <div class="histogram-bar" style="height: 80%"></div>
+                                        <div class="histogram-bar" style="height: 70%"></div>
+                                        <div class="histogram-bar" style="height: 50%"></div>
+                                        <div class="histogram-bar" style="height: 45%"></div>
+                                        <div class="histogram-bar" style="height: 55%"></div>
+                                        <div class="histogram-bar" style="height: 35%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="side-controls">
+                                    <div class="icon-btn">📊</div>
+                                    <div class="icon-btn">🎯</div>
+                                    <div class="icon-btn">⭐</div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-panel">
+                                <div class="param-control">
+                                    <span class="param-label">ISO</span>
+                                    <div class="slider-container">
+                                        <div class="slider">
+                                            <div class="slider-fill" style="width: 40%">
+                                                <div class="slider-thumb"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="param-value">400</span>
+                                </div>
+                                
+                                <div class="param-control">
+                                    <span class="param-label">Выдержка</span>
+                                    <div class="slider-container">
+                                        <div class="slider">
+                                            <div class="slider-fill" style="width: 50%">
+                                                <div class="slider-thumb"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="param-value">1/125</span>
+                                </div>
+                                
+                                <div class="param-control">
+                                    <span class="param-label">Фокус</span>
+                                    <div class="slider-container">
+                                        <div class="slider">
+                                            <div class="slider-fill" style="width: 70%">
+                                                <div class="slider-thumb"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="param-value">2.5m</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bottom-controls">
+                                <div class="thumbnail"></div>
+                                <div class="shutter-btn"></div>
+                                <div class="secondary-btn">📂</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 2: Управление пресетами -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>2. Управление пресетами</h2>
+                    <p>Список сохраненных настроек с поиском</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="presets-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="app-bar">
+                                <div class="back-btn">←</div>
+                                <div class="app-bar-title">Мои пресеты</div>
+                                <div style="width: 40px"></div>
+                            </div>
+                            
+                            <div class="content-area">
+                                <div class="search-bar">
+                                    <span>🔍</span>
+                                    <input type="text" placeholder="Поиск пресета... ">
+                                </div>
+                                
+                                <div class="section-title">Избранные</div>
+                                
+                                <div class="preset-card">
+                                    <div class="preset-header">
+                                        <div class="preset-name">⭐ Портрет дневной</div>
+                                        <div class="preset-actions">
+                                            <div class="preset-action-btn">✏️</div>
+                                            <div class="preset-action-btn">▶️</div>
+                                        </div>
+                                    </div>
+                                    <div class="preset-params">
+                                        <span>ISO: 200</span>
+                                        <span>1/250s</span>
+                                        <span>WB: 5600K</span>
+                                        <span>f/1. 8</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="preset-card">
+                                    <div class="preset-header">
+                                        <div class="preset-name">⭐ Пейзаж HDR</div>
+                                        <div class="preset-actions">
+                                            <div class="preset-action-btn">✏️</div>
+                                            <div class="preset-action-btn">▶️</div>
+                                        </div>
+                                    </div>
+                                    <div class="preset-params">
+                                        <span>ISO: 100</span>
+                                        <span>1/60s</span>
+                                        <span>WB: авто</span>
+                                        <span>f/8. 0</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="section-title">Все пресеты</div>
+                                
+                                <div class="preset-card">
+                                    <div class="preset-header">
+                                        <div class="preset-name">Ночной город</div>
+                                        <div class="preset-actions">
+                                            <div class="preset-action-btn">✏️</div>
+                                            <div class="preset-action-btn">▶️</div>
+                                        </div>
+                                    </div>
+                                    <div class="preset-params">
+                                        <span>ISO: 3200</span>
+                                        <span>1/30s</span>
+                                        <span>WB: 3200K</span>
+                                        <span>f/1.8</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="preset-card">
+                                    <div class="preset-header">
+                                        <div class="preset-name">Макро съемка</div>
+                                        <div class="preset-actions">
+                                            <div class="preset-action-btn">✏️</div>
+                                            <div class="preset-action-btn">▶️</div>
+                                        </div>
+                                    </div>
+                                    <div class="preset-params">
+                                        <span>ISO: 400</span>
+                                        <span>1/125s</span>
+                                        <span>WB: 5200K</span>
+                                        <span>Фокус: 10cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="fab">+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 3: Создание/редактирование пресета -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>3. Редактор пресета</h2>
+                    <p>Создание и настройка нового пресета</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="preset-editor">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="app-bar">
+                                <div class="back-btn">✕</div>
+                                <div class="app-bar-title">Новый пресет</div>
+                                <div style="width: 40px"></div>
+                            </div>
+                            
+                            <div class="content-area">
+                                <div class="input-field">
+                                    <div class="input-label">Название пресета</div>
+                                    <input type="text" placeholder="Введите название...">
+                                </div>
+                                
+                                <div class="parameter-group">
+                                    <div class="group-title">Экспозиция</div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">ISO</span>
+                                        <div class="parameter-selector">
+                                            <div class="stepper-btn">−</div>
+                                            <div class="parameter-display">400</div>
+                                            <div class="stepper-btn">+</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Выдержка</span>
+                                        <div class="parameter-selector">
+                                            <div class="stepper-btn">−</div>
+                                            <div class="parameter-display">1/125s</div>
+                                            <div class="stepper-btn">+</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Компенсация EV</span>
+                                        <div class="parameter-selector">
+                                            <div class="stepper-btn">−</div>
+                                            <div class="parameter-display">+0.7</div>
+                                            <div class="stepper-btn">+</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="parameter-group">
+                                    <div class="group-title">Цвет и фокус</div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Баланс белого</span>
+                                        <div class="parameter-selector">
+                                            <div class="stepper-btn">−</div>
+                                            <div class="parameter-display">5600K</div>
+                                            <div class="stepper-btn">+</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Режим фокуса</span>
+                                        <div class="parameter-selector">
+                                            <div class="parameter-display">Ручной</div>
+                                            <div class="chevron">›</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="parameter-group">
+                                    <div class="group-title">Формат</div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Формат файла</span>
+                                        <div class="parameter-selector">
+                                            <div class="parameter-display">JPEG</div>
+                                            <div class="chevron">›</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Качество</span>
+                                        <div class="parameter-selector">
+                                            <div class="parameter-display">Высокое</div>
+                                            <div class="chevron">›</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="save-btn">💾 Сохранить пресет</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 4: Настройки приложения -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>4. Настройки приложения</h2>
+                    <p>Конфигурация параметров приложения</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="settings-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="app-bar">
+                                <div class="back-btn">←</div>
+                                <div class="app-bar-title">Настройки</div>
+                                <div style="width: 40px"></div>
+                            </div>
+                            
+                            <div class="content-area">
+                                <div class="section-title">Интерфейс</div>
+                                <div class="settings-group">
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Сетка кадрирования</div>
+                                            <div class="settings-desc">Отображать сетку 3×3</div>
+                                        </div>
+                                        <div class="toggle-switch active">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Гистограмма</div>
+                                            <div class="settings-desc">Показывать в реальном времени</div>
+                                        </div>
+                                        <div class="toggle-switch active">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Параметры съемки</div>
+                                            <div class="settings-desc">Отображать ISO, выдержку, WB</div>
+                                        </div>
+                                        <div class="toggle-switch active">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="section-title">Камера</div>
+                                <div class="settings-group">
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Стабилизация</div>
+                                            <div class="settings-desc">Оптическая стабилизация</div>
+                                        </div>
+                                        <div class="toggle-switch active">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Звук затвора</div>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Геолокация</div>
+                                            <div class="settings-desc">Сохранять координаты в EXIF</div>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="section-title">Хранилище</div>
+                                <div class="settings-group">
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Папка сохранения</div>
+                                            <div class="settings-desc">/DCIM/MVxCamera</div>
+                                        </div>
+                                        <div class="chevron">›</div>
+                                    </div>
+                                    
+                                    <div class="settings-item">
+                                        <div>
+                                            <div class="settings-label">Облачная синхронизация</div>
+                                            <div class="settings-desc">Пресеты в облаке</div>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <div class="toggle-thumb"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="section-title">Прочее</div>
+                                <div class="settings-group">
+                                    <div class="settings-item">
+                                        <div class="settings-label">О приложении</div>
+                                        <div class="chevron">›</div>
+                                    </div>
+                                    
+                                    <div class="settings-item">
+                                        <div class="settings-label">Справка и обучение</div>
+                                        <div class="chevron">›</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 5: Применение пресета (диалог) -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>5. Применение пресета</h2>
+                    <p>Предпросмотр и подтверждение применения</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="camera-view">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="viewfinder">
+                                <div class="grid-overlay">
+                                    <div></div><div></div><div></div>
+                                    <div></div><div></div><div></div>
+                                    <div></div><div></div><div></div>
+                                </div>
+                                <span>ПРЕДПРОСМОТР КАМЕРЫ</span>
+                            </div>
+                            
+                            <div class="preset-apply-dialog">
+                                <div class="dialog-handle"></div>
+                                
+                                <div class="preset-preview">
+                                    <div class="preview-title">⭐ Портрет дневной</div>
+                                    <div class="preview-grid">
+                                        <div class="preview-item">
+                                            <div class="preview-label">ISO</div>
+                                            <div class="preview-value">200</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Выдержка</div>
+                                            <div class="preview-value">1/250s</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Баланс белого</div>
+                                            <div class="preview-value">5600K</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Диафрагма</div>
+                                            <div class="preview-value">f/1.8</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Фокус</div>
+                                            <div class="preview-value">Авто</div>
+                                        </div>
+                                        <div class="preview-item">
+                                            <div class="preview-label">Формат</div>
+                                            <div class="preview-value">JPEG</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="action-buttons">
+                                    <div class="btn btn-secondary">Отмена</div>
+                                    <div class="btn btn-primary">✓ Применить</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 6: Справка и помощь -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>6. Справка и помощь</h2>
+                    <p>FAQ и интерактивные подсказки</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="help-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="app-bar">
+                                <div class="back-btn">←</div>
+                                <div class="app-bar-title">Справка</div>
+                                <div style="width: 40px"></div>
+                            </div>
+                            
+                            <div class="content-area">
+                                <div class="search-bar">
+                                    <span>🔍</span>
+                                    <input type="text" placeholder="Поиск по вопросам...">
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <span class="category-chip">📸 Основы</span>
+                                    <span class="category-chip">⚙️ Настройки</span>
+                                    <span class="category-chip">💾 Пресеты</span>
+                                    <span class="category-chip">🔧 Проблемы</span>
+                                </div>
+                                
+                                <div class="section-title">Часто задаваемые вопросы</div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        Что такое ISO и как его настроить?
+                                        <span>▼</span>
+                                    </div>
+                                    <div class="help-answer">
+                                        ISO — это чувствительность матрицы камеры к свету.  Чем выше ISO, 
+                                        тем ярче снимок, но больше шума.  Для дневной съемки используйте 
+                                        ISO 100-400, для вечерней — 800-3200.  Настройте ползунок ISO 
+                                        на главном экране или сохраните значение в пресете.
+                                    </div>
+                                </div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        Как создать и сохранить пресет? 
+                                        <span>›</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        Почему фото получаются размытыми?
+                                        <span>›</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        Как включить съемку в RAW? 
+                                        <span>›</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        Что делать, если приложение не видит камеру?
+                                        <span>›</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="section-title">Обучающие материалы</div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        📹 Видеоурок: Основы ручной съемки
+                                        <span>▶️</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-card">
+                                    <div class="help-question">
+                                        📖 Руководство: Работа с пресетами
+                                        <span>›</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 7: Выбор формата сохранения -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>7. Выбор формата файла</h2>
+                    <p>Настройка формата сохранения снимков</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="preset-editor">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="app-bar">
+                                <div class="back-btn">←</div>
+                                <div class="app-bar-title">Формат файла</div>
+                                <div style="width: 40px"></div>
+                            </div>
+                            
+                            <div class="content-area">
+                                <div class="format-option selected">
+                                    <div class="format-header">
+                                        <div class="format-name">JPEG</div>
+                                        <div class="radio-btn selected"></div>
+                                    </div>
+                                    <div class="format-desc">
+                                        Стандартный формат с хорошим балансом качества и размера файла.  
+                                        Идеален для быстрой публикации и обмена фотографиями.
+                                    </div>
+                                    <div class="format-specs">
+                                        <span>📦 ~3-5 МБ</span>
+                                        <span>✓ Универсальный</span>
+                                        <span>⚡ Быстрый</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="format-option">
+                                    <div class="format-header">
+                                        <div class="format-name">RAW (DNG)</div>
+                                        <div class="radio-btn"></div>
+                                    </div>
+                                    <div class="format-desc">
+                                        Несжатый формат с максимальной информацией. Позволяет 
+                                        проводить глубокую постобработку без потери качества.
+                                    </div>
+                                    <div class="format-specs">
+                                        <span>📦 ~15-25 МБ</span>
+                                        <span>✓ Макс. качество</span>
+                                        <span>🎨 Для обработки</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="format-option">
+                                    <div class="format-header">
+                                        <div class="format-name">HEIF</div>
+                                        <div class="radio-btn"></div>
+                                    </div>
+                                    <div class="format-desc">
+                                        Современный формат с эффективным сжатием.  Лучшее качество 
+                                        при меньшем размере файла по сравнению с JPEG. 
+                                    </div>
+                                    <div class="format-specs">
+                                        <span>📦 ~2-3 МБ</span>
+                                        <span>✓ Экономия памяти</span>
+                                        <span>🆕 Современный</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="format-option">
+                                    <div class="format-header">
+                                        <div class="format-name">JPEG + RAW</div>
+                                        <div class="radio-btn"></div>
+                                    </div>
+                                    <div class="format-desc">
+                                        Сохранение в двух форматах одновременно.  JPEG для быстрого 
+                                        просмотра и RAW для профессиональной обработки. 
+                                    </div>
+                                    <div class="format-specs">
+                                        <span>📦 ~18-30 МБ</span>
+                                        <span>✓ Максимальная гибкость</span>
+                                        <span>⚠️ Много памяти</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="parameter-group" style="margin-top: 20px;">
+                                    <div class="group-title">Дополнительные настройки</div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Качество JPEG</span>
+                                        <div class="parameter-selector">
+                                            <div class="parameter-display">95%</div>
+                                            <div class="chevron">›</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="parameter-item">
+                                        <span class="parameter-name">Разрешение</span>
+                                        <div class="parameter-selector">
+                                            <div class="parameter-display">Полное</div>
+                                            <div class="chevron">›</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Макет 8: Выбор камеры -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <h2>8. Выбор камеры устройства</h2>
+                    <p>Переключение между доступными камерами</p>
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="camera-view">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>⚡ 85%</span>
+                            </div>
+                            
+                            <div class="viewfinder">
+                                <div class="grid-overlay">
+                                    <div></div><div></div><div></div>
+                                    <div></div><div></div><div></div>
+                                    <div></div><div></div><div></div>
+                                </div>
+                                <span>ПРЕДПРОСМОТР КАМЕРЫ</span>
+                            </div>
+                            
+                            <div class="camera-selector">
+                                <div class="camera-option active">
+                                    <div class="camera-icon">📷</div>
+                                    <div class="camera-info">
+                                        <div class="camera-title">Основная камера</div>
+                                        <div class="camera-specs">50 МП • f/1.8 • OIS • Широкоугольная</div>
+                                    </div>
+                                    <div class="radio-btn selected"></div>
+                                </div>
+                                
+                                <div class="camera-option">
+                                    <div class="camera-icon">🔭</div>
+                                    <div class="camera-info">
+                                        <div class="camera-title">Телеобъектив</div>
+                                        <div class="camera-specs">12 МП • f/2.8 • 3x зум • OIS</div>
+                                    </div>
+                                    <div class="radio-btn"></div>
+                                </div>
+                                
+                                <div class="camera-option">
+                                    <div class="camera-icon">🌍</div>
+                                    <div class="camera-info">
+                                        <div class="camera-title">Ультраширокоугольная</div>
+                                        <div class="camera-specs">12 МП • f/2. 2 • 120° FOV</div>
+                                    </div
